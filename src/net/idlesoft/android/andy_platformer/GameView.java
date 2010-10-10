@@ -1,4 +1,4 @@
-package org.idlesoft.android.skateboarding_andy;
+package net.idlesoft.android.andy_platformer;
 
 import android.content.Context;
 import android.graphics.PixelFormat;

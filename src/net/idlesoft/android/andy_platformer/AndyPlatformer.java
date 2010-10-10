@@ -1,4 +1,4 @@
-package org.idlesoft.android.skateboarding_andy;
+package net.idlesoft.android.andy_platformer;
 
 import android.app.Activity;
 import android.hardware.SensorListener;
@@ -10,7 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnTouchListener;
 
-public class SkateboardingAndy extends Activity {
+public class AndyPlatformer extends Activity {
     public GameView m_gameView;
     public World _world;
 	public GameRenderer _renderer;
@@ -68,16 +68,23 @@ public class SkateboardingAndy extends Activity {
         m_sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         m_sensorManager.registerListener(sensorListener, m_sensor, SensorManager.SENSOR_DELAY_GAME);
 
-        _world = new World(this);
+        _world = (World)getLastNonConfigurationInstance();
+        if (_world == null) {
+            _world = new World(AndyPlatformer.this);
+        }
 
 		_renderer = new GameRenderer(getApplicationContext(), _world);
 
-		_logic = new GameLogic(_world, getWindowManager().getDefaultDisplay().getWidth(), getWindowManager().getDefaultDisplay().getHeight(), this);
+		_logic = new GameLogic(_world, getWindowManager().getDefaultDisplay().getWidth(), getWindowManager().getDefaultDisplay().getHeight(), AndyPlatformer.this);
 		_logicThread = new Thread(_logic);
 
 		m_gameView.setRenderer(_renderer);
 
 		m_gameView.setOnTouchListener(onTouch);
+    }
+
+    public Object onRetainNonconfigurationInstance() {
+        return _world;
     }
 
     @Override

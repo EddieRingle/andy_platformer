@@ -1,14 +1,14 @@
-package org.idlesoft.android.skateboarding_andy;
+package net.idlesoft.android.andy_platformer;
 
 import android.os.SystemClock;
 
 public class GameLogic implements Runnable {
 	public World _world;
 	public int _sWidth, _sHeight;
-	public SkateboardingAndy _activity;
+	public AndyPlatformer _activity;
 	public long moveTime = SystemClock.uptimeMillis();
 
-	public GameLogic(World world, int w, int h, SkateboardingAndy activity)
+	public GameLogic(World world, int w, int h, AndyPlatformer activity)
 	{
 		_world = world;
 		_sWidth = w;

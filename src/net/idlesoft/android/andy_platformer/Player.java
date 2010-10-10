@@ -1,4 +1,4 @@
-package org.idlesoft.android.skateboarding_andy;
+package net.idlesoft.android.andy_platformer;
 
 public class Player extends GLQuad {
 	public int lives = 3;

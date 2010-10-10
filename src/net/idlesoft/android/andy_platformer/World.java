@@ -1,4 +1,4 @@
-package org.idlesoft.android.skateboarding_andy;
+package net.idlesoft.android.andy_platformer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
