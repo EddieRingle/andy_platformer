@@ -5,8 +5,8 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.os.SystemClock;
 import android.opengl.GLSurfaceView;
+import android.os.SystemClock;
 
 import com.google.android.opengles.spritetext.LabelMaker;
 import com.google.android.opengles.spritetext.NumericSprite;

@@ -25,8 +25,8 @@ import javax.microedition.khronos.opengles.GL11Ext;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Paint.Style;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.opengl.GLUtils;
 
