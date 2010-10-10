@@ -37,13 +37,13 @@ public class World {
 
 	public World(Activity act)
 	{
-		player = new Player(this, 50, 50, 0, 3);
+		player = new Player(this, 75, 75, 0, 3);
 		player.xPos = 25;
 		player.yPos = 30;
-		enemy = new Enemy(this, 50, 50, 4, 4);
+		enemy = new Enemy(this, 75, 75, 4, 4);
 		enemy.xPos = 778;
 		enemy.yPos = 30;
-		background = new Background(this, 2400, 400, 5, 5);
+		background = new Background(this, 3600, 600, 5, 5);
 		int charWidth, charHeight, charXPos, charYPos;
 		try {
 			BufferedReader mapReader = new BufferedReader(new InputStreamReader(act.getAssets().open("level1.map")));
