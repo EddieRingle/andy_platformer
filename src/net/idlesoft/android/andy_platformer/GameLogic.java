@@ -16,7 +16,9 @@ public class GameLogic extends Thread {
     }
 
     public void doLogic() {
-        // Get Input
+        /**
+         * Input
+         */
         if ((_activity.touchX != -1) || (_activity.touchX != -1)) {
             if (_world.player.onGround) {
                 _world.player.yRawVel = 15.0f;
@@ -26,7 +28,10 @@ public class GameLogic extends Thread {
             _activity.touchY = -1;
         }
 
-        // Only change x velocity if we're on the ground
+        /**
+         *  Player Physics
+         */
+        /* Only change player velocity if he's on the ground */
         if (_world.player.onGround) {
             if (_activity.sensorX != 0) {
                 _world.player.xRawVel = _activity.sensorX * 1.5f;
@@ -35,40 +40,40 @@ public class GameLogic extends Thread {
             }
         }
 
-        if (_world.player.xRawVel > 0) {
-            _world.player.facingForward = true;
-        } else if (_world.player.xRawVel < 0) {
-            _world.player.facingForward = false;
-        }
-
-        // Time-based velocities
-
-        long deltaTime = SystemClock.uptimeMillis() - moveTime;
-        _world.player.yVel = _world.player.yRawVel * (deltaTime / 20.0f);
-        _world.player.xVel = _world.player.xRawVel * (deltaTime / 20.0f);
-
-        // _world.player.yVel = _world.player.yRawVel;
-        // _world.player.xVel = _world.player.xRawVel;
-
-        // Move stuff
-
-        _world.player.move(_sWidth, _sHeight);
-        moveTime = SystemClock.uptimeMillis();
-
-        // Physics and what-not
-
+        /* Apply gravity */
         if (!_world.player.onGround) {
             _world.player.yRawVel--;
         } else if (_world.player.onGround) {
             _world.player.yRawVel = 0.0f;
         }
+
+        /* Slow player's x velocity down gradually */
         if ((_world.player.xRawVel > 0.0f) && _world.player.onGround) {
             _world.player.xRawVel--;
         } else if ((_world.player.xVel < 0.0f) && _world.player.onGround) {
             _world.player.xRawVel++;
         }
 
-        // Check if the player died
+        /* Control velocities based on time */
+        long deltaTime = SystemClock.uptimeMillis() - moveTime;
+        _world.player.yVel = _world.player.yRawVel * (deltaTime / 20.0f);
+        _world.player.xVel = _world.player.xRawVel * (deltaTime / 20.0f);
+
+        /* Set direction player is facing */
+        if (_world.player.xRawVel > 0) {
+            _world.player.facingForward = true;
+        } else if (_world.player.xRawVel < 0) {
+            _world.player.facingForward = false;
+        }
+
+        /**
+         * Move stuff
+         */
+
+        _world.player.move(_sWidth, _sHeight);
+        moveTime = SystemClock.uptimeMillis();
+
+        /* Check if the player died */
         if (!_world.player.alive) {
             // Reset his position
             _world.player.xPos = 25;
