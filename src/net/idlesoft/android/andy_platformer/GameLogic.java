@@ -28,11 +28,13 @@ public class GameLogic implements Runnable {
 			_activity.touchY = -1;
 		}
 
-		if (_activity.sensorX != 0) {
-			if (_world.player.onGround)
-				_world.player.xRawVel = (float)_activity.sensorX * 0.75f;
-		} else {
-			_world.player.xRawVel = 0.0f;
+		// Only change x velocity if we're on the ground
+		if (_world.player.onGround) {
+		    if (_activity.sensorX != 0) {
+    			_world.player.xRawVel = (float)_activity.sensorX * 1.5f;
+    		} else {
+    			_world.player.xRawVel = 0.0f;
+    		}
 		}
 
 		if (_world.player.xRawVel > 0)
