@@ -22,10 +22,10 @@ public class World {
 	public ReentrantLock _lock;
 	public int[] texDrawableIDs = {
 			// Andy drawables
-			R.drawable.cyan_skate_left_andy1,
-			R.drawable.cyan_skate_right_andy1,
-			R.drawable.cyan_jump_left_andy1,
-			R.drawable.cyan_jump_right_andy1,
+			R.drawable.andy_skate_left,
+			R.drawable.andy_skate_right,
+			R.drawable.andy_jump_left,
+			R.drawable.andy_jump_right,
 			// Enemy drawables
 			R.drawable.enemy1,
 			// Background drawables

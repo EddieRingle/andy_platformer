@@ -100,7 +100,10 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 			else
 				texOffset = 3;
 		}
+		 gl.glColor4f(0.64f, 0.78f, 0.22f, 1.0f);
+		// Cyan: gl.glColor4f(0.61f, 0.87f, 0.91f, 1.0f);
 		_world.player.draw(gl, texOffset);
+		gl.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		gl.glPopMatrix();
 
 		gl.glPushMatrix();
@@ -157,12 +160,14 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 		gl.glDisable(GL10.GL_DEPTH_TEST);
-		gl.glDisable(GL10.GL_LIGHTING);
-		gl.glDisable(GL10.GL_DITHER);
+		//gl.glDisable(GL10.GL_LIGHTING);
+		//gl.glDisable(GL10.GL_DITHER);
 		gl.glEnable(GL10.GL_BLEND);
 		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
+
+		gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE, GL10.GL_MODULATE);
 
 		_world.loadGLTextures(gl, m_context);
 	}
