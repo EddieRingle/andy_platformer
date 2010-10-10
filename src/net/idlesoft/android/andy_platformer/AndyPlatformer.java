@@ -13,8 +13,8 @@ import android.view.WindowManager;
 public class AndyPlatformer extends Activity {
     public GameView m_gameView;
     public World _world;
-	public GameRenderer _renderer;
-	public GameLogic _logic;
+    public GameRenderer _renderer;
+    public GameLogic _logic;
     public SensorManager m_sensorManager;
     public int m_sensor = SensorManager.SENSOR_ORIENTATION;
     public long lastUpdate = -1;
@@ -22,44 +22,45 @@ public class AndyPlatformer extends Activity {
     public boolean done = false;
 
     public OnTouchListener onTouch = new OnTouchListener() {
-		@Override
-		public boolean onTouch(View arg0, MotionEvent arg1)
-		{
-			if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
-				touchX = (int)arg1.getX();
-				touchY = (int)arg1.getY();
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			return false;
-		}
-	};
+        @Override
+        public boolean onTouch(View arg0, MotionEvent arg1) {
+            if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
+                touchX = (int) arg1.getX();
+                touchY = (int) arg1.getY();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return false;
+        }
+    };
 
-	public SensorListener sensorListener = new SensorListener() {
-		@Override
-		public void onSensorChanged(int sensor, float[] values) {
-			float pitch = values[2];
-			if (pitch < -3)
-				sensorX = (int)(-pitch / 3.0f);
-			else if (pitch > 3)
-				sensorX = (int)(-pitch / 3.0f);
-			else
-				sensorX = 0;
-		}
-		
-		@Override
-		public void onAccuracyChanged(int sensor, int accuracy) {
-		}
-	};
+    public SensorListener sensorListener = new SensorListener() {
+        @Override
+        public void onSensorChanged(int sensor, float[] values) {
+            float pitch = values[2];
+            if (pitch < -3) {
+                sensorX = (int) (-pitch / 3.0f);
+            } else if (pitch > 3) {
+                sensorX = (int) (-pitch / 3.0f);
+            } else {
+                sensorX = 0;
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(int sensor, int accuracy) {
+        }
+    };
+
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         m_gameView = new GameView(this);
         setContentView(m_gameView);
@@ -67,20 +68,21 @@ public class AndyPlatformer extends Activity {
         m_sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         m_sensorManager.registerListener(sensorListener, m_sensor, SensorManager.SENSOR_DELAY_GAME);
 
-        _world = (World)getLastNonConfigurationInstance();
+        _world = (World) getLastNonConfigurationInstance();
         if (_world == null) {
             _world = new World(AndyPlatformer.this);
         }
 
-		_renderer = new GameRenderer(getApplicationContext(), _world);
+        _renderer = new GameRenderer(getApplicationContext(), _world);
 
-		_logic = new GameLogic(_world, getWindowManager().getDefaultDisplay().getWidth(), getWindowManager().getDefaultDisplay().getHeight(), AndyPlatformer.this);
+        _logic = new GameLogic(_world, getWindowManager().getDefaultDisplay().getWidth(),
+                getWindowManager().getDefaultDisplay().getHeight(), AndyPlatformer.this);
 
-		m_gameView.setRenderer(_renderer);
+        m_gameView.setRenderer(_renderer);
 
-		m_gameView.setOnTouchListener(onTouch);
+        m_gameView.setOnTouchListener(onTouch);
 
-		_logic.start();
+        _logic.start();
     }
 
     public Object onRetainNonconfigurationInstance() {
@@ -88,21 +90,19 @@ public class AndyPlatformer extends Activity {
     }
 
     @Override
-    public void onResume()
-    {
-    	super.onResume();
-    	System.gc();
-    	m_gameView.onResume();
-    	this.done = false;
-    	_world.paused = false;
+    public void onResume() {
+        super.onResume();
+        System.gc();
+        m_gameView.onResume();
+        done = false;
+        _world.paused = false;
     }
 
     @Override
-    public void onPause()
-    {
-    	super.onPause();
-    	m_gameView.onPause();
-    	_logic.interrupt();
-    	_world.paused = true;
+    public void onPause() {
+        super.onPause();
+        m_gameView.onPause();
+        _logic.interrupt();
+        _world.paused = true;
     }
 }
