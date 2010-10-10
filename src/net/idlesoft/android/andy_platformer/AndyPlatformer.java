@@ -15,7 +15,6 @@ public class AndyPlatformer extends Activity {
     public World _world;
 	public GameRenderer _renderer;
 	public GameLogic _logic;
-	public Thread _logicThread;
     public SensorManager m_sensorManager;
     public int m_sensor = SensorManager.SENSOR_ORIENTATION;
     public long lastUpdate = -1;
@@ -76,11 +75,12 @@ public class AndyPlatformer extends Activity {
 		_renderer = new GameRenderer(getApplicationContext(), _world);
 
 		_logic = new GameLogic(_world, getWindowManager().getDefaultDisplay().getWidth(), getWindowManager().getDefaultDisplay().getHeight(), AndyPlatformer.this);
-		_logicThread = new Thread(_logic);
 
 		m_gameView.setRenderer(_renderer);
 
 		m_gameView.setOnTouchListener(onTouch);
+
+		_logic.start();
     }
 
     public Object onRetainNonconfigurationInstance() {
@@ -93,7 +93,8 @@ public class AndyPlatformer extends Activity {
     	super.onResume();
     	System.gc();
     	m_gameView.onResume();
-    	_logicThread.start();
+    	this.done = false;
+    	_world.paused = false;
     }
 
     @Override
@@ -101,6 +102,7 @@ public class AndyPlatformer extends Activity {
     {
     	super.onPause();
     	m_gameView.onPause();
-    	this.done = true;
+    	_logic.interrupt();
+    	_world.paused = true;
     }
 }

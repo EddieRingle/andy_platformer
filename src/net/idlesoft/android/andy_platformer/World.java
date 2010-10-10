@@ -34,6 +34,7 @@ public class World {
 			R.drawable.gray_bricks
 	};
 	public int[] textures;
+	public boolean paused = false;
 
 	public World(Activity act)
 	{

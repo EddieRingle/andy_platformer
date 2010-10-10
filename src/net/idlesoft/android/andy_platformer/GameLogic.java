@@ -2,7 +2,7 @@ package net.idlesoft.android.andy_platformer;
 
 import android.os.SystemClock;
 
-public class GameLogic implements Runnable {
+public class GameLogic extends Thread {
 	public World _world;
 	public int _sWidth, _sHeight;
 	public AndyPlatformer _activity;
@@ -79,20 +79,21 @@ public class GameLogic implements Runnable {
 		}
 	}
 
-	@Override
 	public void run()
 	{
-		while (!_activity.done) {
-			_world._lock.lock();
-			this.doLogic();
-			_world._lock.unlock();
-			if (_activity.done)
-				return;
-			try {
-				Thread.sleep(16);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		while (!this.isInterrupted()) {
+		    if (!_world.paused) {
+    			_world._lock.lock();
+    			this.doLogic();
+    			_world._lock.unlock();
+    			if (_activity.done)
+    				return;
+    			try {
+    				Thread.sleep(16);
+    			} catch (InterruptedException e) {
+    				e.printStackTrace();
+    			}
+		    }
 		}
 		return;
 	}
